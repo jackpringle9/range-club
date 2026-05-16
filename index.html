@@ -8,50 +8,74 @@
 <meta name="apple-mobile-web-app-title" content="The Range Club">
 <meta name="theme-color" content="#0a0e13">
 <title>The Range Club</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg:#0a0e13; --surface:#111820; --surface2:#161d26;
-  --border:rgba(255,255,255,.09); --border2:rgba(255,255,255,.16);
-  --text:#dce8f0; --muted:#4a6070; --faint:#1a2030;
-  --pure:#3fb950;  --pure-bg:#0d2018;  --pure-b:#1a4030;
-  --hit:#7ee787;   --hit-bg:#0a1c10;   --hit-b:#123020;
-  --thin:#f0883e;  --thin-bg:#201000;  --thin-b:#3a1e00;
-  --top:#e3b341;   --top-bg:#201800;   --top-b:#3a2c00;
-  --hook:#c084fc;  --hook-bg:#180d28;  --hook-b:#2c1848;
-  --slice:#f85149; --slice-bg:#200810; --slice-b:#3a0e18;
-  --r:10px; --sb:env(safe-area-inset-bottom,0px);
+:root{
+  --bg:#0a0e13;--surface:#111820;--surface2:#161d26;
+  --bd:rgba(255,255,255,.09);--bd2:rgba(255,255,255,.16);
+  --text:#dce8f0;--muted:#4a6070;--faint:#1a2030;
+  --pure:#3fb950;--pure-bg:#0d2018;--pure-b:#1a4030;
+  --hit:#7ee787;--hit-bg:#0a1c10;--hit-b:#123020;
+  --thin:#f0883e;--thin-bg:#201000;--thin-b:#3a1e00;
+  --top:#e3b341;--top-bg:#201800;--top-b:#3a2c00;
+  --hook:#c084fc;--hook-bg:#180d28;--hook-b:#2c1848;
+  --slice:#f85149;--slice-bg:#200810;--slice-b:#3a0e18;
+  --r:10px;--sb:env(safe-area-inset-bottom,0px);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%;background:var(--bg)}
-body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;-webkit-font-smoothing:antialiased}
 #app{max-width:680px;margin:0 auto;padding:0 0 calc(66px + var(--sb))}
-.view{display:none;padding:20px 16px}.view.on{display:block}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:680px;background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:var(--sb);z-index:100}
+
+/* USER SCREEN */
+#user-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:20px}
+.us-logo{font-size:26px;font-weight:500;text-align:center}.us-logo em{color:var(--pure);font-style:normal}
+.us-sub{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;text-align:center;margin-top:-12px}
+.user-list{width:100%;max-width:360px;display:flex;flex-direction:column;gap:8px}
+.user-btn{width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid var(--bd2);background:var(--surface);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .18s}
+.user-btn:active{opacity:.75;transform:scale(.98)}
+.u-dot{width:34px;height:34px;border-radius:50%;background:var(--pure-bg);color:var(--pure);border:1px solid var(--pure-b);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+.u-label{flex:1}.u-name{font-size:13px;font-weight:500}.u-stats{font-size:10px;color:var(--muted);margin-top:2px}
+.u-arrow{color:var(--muted);font-size:18px;flex-shrink:0}
+.add-user-btn{width:100%;max-width:360px;padding:12px 16px;border-radius:var(--r);border:1px dashed var(--bd2);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;letter-spacing:.04em;transition:all .18s}
+.add-user-btn:active{opacity:.7}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:680px;background:var(--surface);border-top:1px solid var(--bd);display:flex;padding-bottom:var(--sb);z-index:100}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 4px;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:color .18s}
-.nav-btn i{font-size:20px;line-height:1}.nav-btn.on{color:var(--pure)}
-.logo{font-size:18px;font-weight:500;letter-spacing:.02em;margin-bottom:18px}
+.nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.on{color:var(--pure)}
+
+/* VIEWS */
+.view{display:none;padding:20px 16px}.view.on{display:block}
+.logo{font-size:18px;font-weight:500;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .logo em{color:var(--pure);font-style:normal}
+.user-chip{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--bd2);border-radius:20px;padding:5px 12px 5px 7px;cursor:pointer}
+.user-chip:active{opacity:.7}
+.chip-dot{width:20px;height:20px;border-radius:50%;background:var(--pure-bg);color:var(--pure);border:1px solid var(--pure-b);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500}
+.chip-name{font-size:11px;color:var(--text)}
 .ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
-.ph-title{font-size:18px;font-weight:500}.ph-meta{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.06em}
-.page-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}
+.ph-title{font-size:18px;font-weight:500}.ph-meta{font-size:11px;color:var(--muted);margin-top:3px}
+.page-actions{display:flex;gap:6px;flex-wrap:wrap}
 button{font-family:'DM Mono',monospace;cursor:pointer;-webkit-appearance:none}
-.btn{padding:8px 14px;border-radius:var(--r);border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;letter-spacing:.06em;transition:all .18s;white-space:nowrap}
-.btn:active{opacity:.7;transform:scale(.97)}.btn-sm{padding:6px 11px;font-size:11px}
+.btn{padding:8px 14px;border-radius:var(--r);border:1px solid var(--bd2);background:var(--surface2);color:var(--text);font-size:12px;letter-spacing:.04em;transition:all .18s;white-space:nowrap}
+.btn:active{opacity:.7;transform:scale(.97)}
+.btn-sm{padding:6px 11px;font-size:11px}
 .btn-green{background:var(--pure-bg);border-color:var(--pure-b);color:var(--pure)}
 .btn-red{background:var(--slice-bg);border-color:var(--slice-b);color:var(--slice)}
-.btn-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
-input[type=date],input[type=text]{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;outline:none;transition:border-color .18s;color-scheme:dark;width:100%}
+.btn-ghost{background:transparent;border-color:var(--bd);color:var(--muted)}
+input[type=date],input[type=text]{background:var(--surface2);border:1px solid var(--bd2);border-radius:var(--r);color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;outline:none;transition:border-color .18s;color-scheme:dark;width:100%}
 input[type=date]:focus,input[type=text]:focus{border-color:var(--pure-b)}
 input[type=text]::placeholder{color:var(--muted)}
 .date-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .date-row label{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .date-row input[type=date]{flex:1;min-width:0}
-.voice-bar{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:16px}
-.mic-btn{width:42px;height:42px;border-radius:50%;flex-shrink:0;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .2s}
+
+/* VOICE */
+.voice-bar{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:13px 14px;margin-bottom:16px}
+.mic-btn{width:42px;height:42px;border-radius:50%;flex-shrink:0;border:1px solid var(--bd2);background:var(--surface2);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.mic-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .mic-btn.listening{background:var(--pure-bg);border-color:var(--pure-b);color:var(--pure);animation:pulse 1.2s infinite}
 .mic-btn.error{border-color:var(--slice-b);color:var(--slice)}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(63,185,80,.35)}50%{box-shadow:0 0 0 7px rgba(63,185,80,0)}}
@@ -59,25 +83,34 @@ input[type=text]::placeholder{color:var(--muted)}
 .voice-status{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:4px}
 .voice-status strong{color:var(--text);font-weight:500}
 .voice-hint{font-size:10px;color:var(--muted);line-height:1.6}
-.voice-hint code{background:var(--faint);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:10px;color:var(--text)}
+.voice-hint code{background:var(--faint);border:1px solid var(--bd);border-radius:3px;padding:1px 5px;font-size:10px;color:var(--text)}
 .voice-result{font-size:11px;margin-top:6px;padding:6px 10px;border-radius:6px;display:none}
 .voice-result.ok{display:block;background:var(--pure-bg);color:var(--pure);border:1px solid var(--pure-b)}
 .voice-result.err{display:block;background:var(--slice-bg);color:var(--slice);border:1px solid var(--slice-b)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:10px}
-.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.club-name{font-size:14px;font-weight:500}
-.club-meta{display:flex;align-items:center;gap:8px}
+
+/* CLUB CARDS */
+.card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:13px 14px;margin-bottom:10px}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;gap:8px}
+.club-name-wrap{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.club-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rename-btn{background:none;border:none;color:var(--muted);font-size:13px;padding:2px 4px;border-radius:3px;cursor:pointer;opacity:.55;transition:opacity .15s;flex-shrink:0}
+.rename-btn:active{opacity:1;color:var(--pure)}
+.club-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .club-tot{font-size:11px;color:var(--muted)}
-.del-btn{background:none;border:none;color:var(--muted);font-size:16px;padding:2px 4px;border-radius:4px;cursor:pointer;transition:color .15s}
+.del-btn{background:none;border:none;color:var(--muted);font-size:16px;padding:2px 4px;border-radius:4px;cursor:pointer}
 .del-btn:active{color:var(--slice)}
-.shot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.rename-row{display:flex;align-items:center;gap:6px;margin-bottom:11px}
+.rename-inp{flex:1;background:var(--faint);border:1px solid var(--pure-b);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:6px 10px;outline:none;min-width:0}
+.rename-ok{background:var(--pure-bg);border:1px solid var(--pure-b);color:var(--pure);border-radius:6px;padding:6px 11px;font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
+.rename-cancel{background:transparent;border:1px solid var(--bd);color:var(--muted);border-radius:6px;padding:6px 9px;font-size:11px;cursor:pointer;font-family:'DM Mono',monospace}
+.shot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
 @media(max-width:420px){.shot-grid{grid-template-columns:repeat(3,1fr)}}
 .shot-col{display:flex;flex-direction:column;align-items:center;gap:4px}
 .shot-lbl{font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-.counter{display:flex;align-items:center;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
-.c-btn{width:28px;height:32px;border:none;background:var(--faint);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.c-btn:active{background:var(--border2);color:var(--text)}
-.c-val{width:30px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;background:var(--surface2);border-left:1px solid var(--border);border-right:1px solid var(--border);transition:all .15s}
+.counter{display:flex;align-items:center;border-radius:6px;overflow:hidden;border:1px solid var(--bd)}
+.c-btn{width:26px;height:30px;border:none;background:var(--faint);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.c-btn:active{background:var(--bd2);color:var(--text)}
+.c-val{width:28px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;background:var(--surface2);border-left:1px solid var(--bd);border-right:1px solid var(--bd);transition:all .12s}
 .v-pure{background:var(--pure-bg);color:var(--pure)}.v-hit{background:var(--hit-bg);color:var(--hit)}
 .v-thin{background:var(--thin-bg);color:var(--thin)}.v-top{background:var(--top-bg);color:var(--top)}
 .v-hook{background:var(--hook-bg);color:var(--hook)}.v-slice{background:var(--slice-bg);color:var(--slice)}
@@ -87,62 +120,85 @@ input[type=text]::placeholder{color:var(--muted)}
 .cell-top{background:var(--top-bg);color:var(--top);border:1px solid var(--top-b)}
 .cell-hook{background:var(--hook-bg);color:var(--hook);border:1px solid var(--hook-b)}
 .cell-slice{background:var(--slice-bg);color:var(--slice);border:1px solid var(--slice-b)}
-.cell-zero{background:transparent;color:var(--border2);border:1px solid var(--border)}
-hr{border:none;border-top:1px solid var(--border);margin:18px 0}
-.sec-title{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.cell-zero{background:transparent;color:var(--bd2);border:1px solid var(--bd)}
+
+hr{border:none;border-top:1px solid var(--bd);margin:18px 0}
+.sec-title{font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
 .preset-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.preset-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--faint);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .18s}
-.preset-btn:active{border-color:var(--border2);color:var(--text)}
-.add-row{display:flex;gap:8px;align-items:center}.add-row input{flex:1}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:7px;margin-bottom:16px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 8px;text-align:center}
-.stat-v{font-size:20px;font-weight:500;line-height:1}.stat-l{font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
-.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);margin-bottom:16px;-webkit-overflow-scrolling:touch}
+.preset-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--bd);background:var(--faint);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer}
+.add-row{display:flex;gap:7px;align-items:center}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(82px,1fr));gap:7px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:11px 8px;text-align:center}
+.stat-v{font-size:20px;font-weight:500;line-height:1}
+.stat-l{font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+
+/* TABLE */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--bd);margin-bottom:16px;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse}
-thead tr{background:var(--surface);border-bottom:1px solid var(--border)}
-th{padding:9px 8px;text-align:center;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap}
-th:first-child{text-align:left;padding-left:13px}
-tbody tr{border-bottom:1px solid var(--border)}
+thead tr{background:var(--surface);border-bottom:1px solid var(--bd)}
+th{padding:9px 8px;text-align:center;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap}
+th:first-child{text-align:left;padding-left:12px}
+tbody tr{border-bottom:1px solid var(--bd)}
 tbody tr:last-child{border-bottom:none}
-td{padding:8px;text-align:center;white-space:nowrap}
-td:first-child{text-align:left;padding-left:13px;font-size:12px}
+td{padding:7px 8px;text-align:center;white-space:nowrap}
+td:first-child{text-align:left;padding-left:12px;font-size:12px}
 .cell{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:5px;font-size:11px;font-weight:500}
-.tot-row{background:var(--surface2)!important;border-top:1px solid var(--border2)!important}
-.tot-row td:first-child{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.hm-tabs{display:flex;gap:2px;background:var(--faint);border-radius:var(--r);padding:3px;align-self:flex-start}
-.hm-tab{padding:5px 11px;border-radius:7px;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .18s}
-.hm-tab.on{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.tot-row{background:var(--surface2)!important;border-top:1px solid var(--bd2)!important}
+.tot-row td:first-child{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hm-ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.hm-tabs{display:flex;gap:2px;background:var(--faint);border-radius:8px;padding:3px}
+.hm-tab{padding:5px 10px;border-radius:6px;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;cursor:pointer}
+.hm-tab.on{background:var(--bd2);color:var(--text)}
 .legend{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:13px}
 .leg-i{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
 .leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-.chart-grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:520px){.chart-grid{grid-template-columns:1fr 1fr}}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px}
-.chart-full{grid-column:1/-1}
-.chart-title{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:11px}
-.h-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:9px}
+.chart-grid{display:flex;flex-direction:column;gap:12px}
+.chart-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:15px}
+.chart-title{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.h-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-bottom:9px}
 .h-date{font-size:15px;font-weight:500}.h-meta{font-size:11px;color:var(--muted);margin-top:2px}
-.pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.pills{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
 .pill{padding:2px 7px;border-radius:20px;font-size:9px;letter-spacing:.06em;text-transform:uppercase}
-.h-actions{display:flex;gap:6px;margin-top:10px}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.h-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:12px;line-height:1.8}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px}
 .overlay.on{display:block}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:20px;margin:20px 12px calc(20px + var(--sb))}
+.modal{background:var(--surface);border:1px solid var(--bd2);border-radius:14px;padding:18px;max-width:600px;margin:0 auto}
 .modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.modal-title{font-size:16px;font-weight:500}
-.modal-x{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:2px 5px;border-radius:4px}
+.modal-title{font-size:18px;font-weight:500}
+.modal-x{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0 4px;line-height:1}
 .modal-foot{display:flex;justify-content:flex-end;gap:7px;margin-top:14px;flex-wrap:wrap}
-.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:12px;line-height:1.9}
-.note{font-size:10px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.danger-zone{border:1px solid var(--slice-b);border-radius:var(--r);padding:14px;background:var(--slice-bg);margin-top:20px}
+.danger-zone .sec-title{color:var(--slice)}
+.danger-zone p{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6}
 </style>
 </head>
 <body>
 
-<div id="app">
+<!-- USER SELECTION SCREEN -->
+<div id="user-screen">
+  <div class="us-logo">The Range <em>Club</em></div>
+  <div class="us-sub">Select your profile</div>
+  <div class="user-list" id="user-list"></div>
+  <button class="add-user-btn" onclick="showAddUser()">+ Add new player</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
 
   <!-- LOG -->
   <div class="view on" id="v-log">
-    <div class="logo">The Range <em>Club</em></div>
+    <div class="logo">The Range <em>Club</em>
+      <div class="user-chip" onclick="switchUser()">
+        <div class="chip-dot" id="chip-initial">?</div>
+        <div class="chip-name" id="chip-name">Player</div>
+      </div>
+    </div>
     <div class="ph">
       <div><div class="ph-title">Session log</div><div class="ph-meta" id="log-meta"></div></div>
       <div class="page-actions">
@@ -156,10 +212,10 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
     </div>
     <div class="voice-bar">
       <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" aria-label="Voice input">
-        <i class="ti ti-microphone"></i>
+        <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>
       </button>
       <div class="voice-info">
-        <div class="voice-status" id="voice-status"><strong>Voice input</strong> — tap mic and say club name and shots</div>
+        <div class="voice-status" id="voice-status"><strong>Voice input</strong> — tap the mic and say a club and shot counts</div>
         <div class="voice-hint">e.g. <code>7 iron, 6 pure, 2 hits, 1 thin</code></div>
         <div class="voice-result" id="voice-result"></div>
       </div>
@@ -169,7 +225,7 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
     <div class="sec-title">Add club</div>
     <div class="preset-row" id="presets-log"></div>
     <div class="add-row">
-      <input type="text" id="custom-in" placeholder="Custom club name…">
+      <input type="text" id="custom-in" placeholder="Custom club…">
       <button class="btn btn-sm" onclick="addCustom()">+ Add</button>
     </div>
   </div>
@@ -177,7 +233,7 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
   <!-- HEATMAP -->
   <div class="view" id="v-heatmap">
     <div class="logo">The Range <em>Club</em></div>
-    <div class="ph">
+    <div class="hm-ph">
       <div><div class="ph-title">Heatmap</div><div class="ph-meta" id="hm-meta"></div></div>
       <div class="hm-tabs">
         <button class="hm-tab on" id="hmt-cur" onclick="setHM('cur')">Current</button>
@@ -200,7 +256,7 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
   <!-- CHARTS -->
   <div class="view" id="v-charts">
     <div class="logo">The Range <em>Club</em></div>
-    <div class="ph"><div><div class="ph-title">Progress</div><div class="ph-meta">All saved sessions</div></div></div>
+    <div class="ph"><div><div class="ph-title">Progress</div><div class="ph-meta" id="charts-meta"></div></div></div>
     <div class="chart-grid" id="chart-grid"></div>
   </div>
 
@@ -208,23 +264,58 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
   <div class="view" id="v-history">
     <div class="logo">The Range <em>Club</em></div>
     <div class="ph">
-      <div><div class="ph-title">History</div><div class="ph-meta">All saved sessions</div></div>
+      <div><div class="ph-title">History</div><div class="ph-meta" id="hist-meta"></div></div>
       <button class="btn btn-sm btn-red" onclick="clearAll()">Clear all</button>
     </div>
     <div id="hist-list"></div>
   </div>
 
+  <!-- PROFILE -->
+  <div class="view" id="v-profile">
+    <div class="logo">The Range <em>Club</em></div>
+    <div class="ph">
+      <div><div class="ph-title" id="profile-name">Profile</div><div class="ph-meta" id="profile-meta"></div></div>
+      <button class="btn btn-sm" onclick="switchUser()">Switch player</button>
+    </div>
+    <div class="sec-title">Summary</div>
+    <div class="profile-grid" id="profile-stats"></div>
+    <div class="sec-title">Rename player</div>
+    <div class="add-row" style="margin-bottom:0">
+      <input type="text" id="rename-inp" placeholder="New name…">
+      <button class="btn btn-sm btn-green" onclick="renameUser()">Save</button>
+    </div>
+    <div class="danger-zone">
+      <div class="sec-title">Danger zone</div>
+      <p>Delete all sessions and data for this player. This cannot be undone.</p>
+      <button class="btn btn-sm btn-red" onclick="deleteUser()">Delete player</button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn on" onclick="go('log')">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Log
+    </button>
+    <button class="nav-btn" onclick="go('heatmap')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Heatmap
+    </button>
+    <button class="nav-btn" onclick="go('charts')">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Charts
+    </button>
+    <button class="nav-btn" onclick="go('history')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      History
+    </button>
+    <button class="nav-btn" onclick="go('profile')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </button>
+  </nav>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <button class="nav-btn on" id="nb-log" onclick="go('log')"><i class="ti ti-pencil"></i>Log</button>
-  <button class="nav-btn" id="nb-heatmap" onclick="go('heatmap')"><i class="ti ti-layout-grid"></i>Heatmap</button>
-  <button class="nav-btn" id="nb-charts" onclick="go('charts')"><i class="ti ti-chart-line"></i>Charts</button>
-  <button class="nav-btn" id="nb-history" onclick="go('history')"><i class="ti ti-history"></i>History</button>
-</nav>
-
-<!-- EDIT MODAL -->
+<!-- EDIT SESSION MODAL -->
 <div class="overlay" id="modal">
   <div class="modal">
     <div class="modal-hdr">
@@ -237,7 +328,7 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
     <div class="sec-title">Add club</div>
     <div class="preset-row" id="presets-edit"></div>
     <div class="add-row">
-      <input type="text" id="edit-custom" placeholder="Custom club name…">
+      <input type="text" id="edit-custom" placeholder="Custom club…">
       <button class="btn btn-sm" onclick="editAddCustom()">+ Add</button>
     </div>
     <div class="modal-foot">
@@ -247,12 +338,30 @@ td:first-child{text-align:left;padding-left:13px;font-size:12px}
   </div>
 </div>
 
+<!-- ADD USER MODAL -->
+<div class="overlay" id="add-user-modal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">Add player</div>
+      <button class="modal-x" onclick="closeAddUser()">✕</button>
+    </div>
+    <div class="sec-title" style="margin-bottom:8px">Player name</div>
+    <input type="text" id="new-user-inp" placeholder="e.g. Jack, Tom, Sarah…" style="margin-bottom:4px">
+    <div class="modal-foot">
+      <button class="btn btn-sm btn-ghost" onclick="closeAddUser()">Cancel</button>
+      <button class="btn btn-sm btn-green" onclick="confirmAddUser()">Create player</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const CATS=['pure','hit','thin','top','hook','slice'];
-const CCLS={pure:'cell-pure',hit:'cell-hit',thin:'cell-thin',top:'cell-top',hook:'cell-hook',slice:'cell-slice'};
 const VCLS={pure:'v-pure',hit:'v-hit',thin:'v-thin',top:'v-top',hook:'v-hook',slice:'v-slice'};
-const CCOL={pure:'#3fb950',hit:'#7ee787',thin:'#f0883e',top:'#e3b341',hook:'#c084fc',slice:'#f85149'};
+const CCLS={pure:'cell-pure',hit:'cell-hit',thin:'cell-thin',top:'cell-top',hook:'cell-hook',slice:'cell-slice'};
 const PRESETS=['56° Wedge','Pitching Wedge','9 Iron','8 Iron','7 Iron','6 Iron','5 Iron','4 Iron','3 Iron','Hybrid','3 Wood','5 Wood','Driver','7 Iron (Tee)','Driver (Tee)'];
+const CLUB_ALIASES={'fifty six wedge':'56° Wedge','56 degree wedge':'56° Wedge','56 wedge':'56° Wedge','sand wedge':'56° Wedge','lob wedge':'56° Wedge','pitching wedge':'Pitching Wedge','pitch wedge':'Pitching Wedge','pw':'Pitching Wedge','gap wedge':'Pitching Wedge','nine iron':'9 Iron','9 iron':'9 Iron','eight iron':'8 Iron','8 iron':'8 Iron','seven iron off the tee':'7 Iron (Tee)','7 iron off the tee':'7 Iron (Tee)','seven iron':'7 Iron','7 iron':'7 Iron','six iron':'6 Iron','6 iron':'6 Iron','five iron':'5 Iron','5 iron':'5 Iron','four iron':'4 Iron','4 iron':'4 Iron','three iron':'3 Iron','3 iron':'3 Iron','hybrid':'Hybrid','rescue':'Hybrid','three wood':'3 Wood','3 wood':'3 Wood','five wood':'5 Wood','5 wood':'5 Wood','driver off the tee':'Driver (Tee)','driver':'Driver','the driver':'Driver'};
+const CAT_ALIASES={'pure':'pure','pures':'pure','clean':'pure','cleans':'pure','hit':'hit','hits':'hit','solid':'hit','solids':'hit','thin':'thin','thins':'thin','thinned':'thin','top':'top','tops':'top','topped':'top','hook':'hook','hooks':'hook','draw':'hook','draws':'hook','slice':'slice','slices':'slice','fade':'slice','fades':'slice','push':'slice'};
+const WORD_NUMS={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
 
 function ld(k){try{return JSON.parse(localStorage.getItem(k))||null}catch{return null}}
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v))}
@@ -262,64 +371,222 @@ function newClub(n){return{name:n,pure:0,hit:0,thin:0,top:0,hook:0,slice:0}}
 function clubTot(c){return CATS.reduce((s,k)=>s+c[k],0)}
 function sessTot(clubs){return CATS.reduce((a,k)=>{a[k]=clubs.reduce((s,c)=>s+c[k],0);return a},{})}
 function grand(t){return CATS.reduce((s,k)=>s+t[k],0)}
+function initial(n){return((n||'?')[0]).toUpperCase()}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
 
-let sess=ld('trc_sess')||{date:todayISO(),clubs:[]};
-let hist=ld('trc_hist')||[];
-let hmMode='cur',editIdx=null,editSnap=null,charts={};
+// ── USER STATE ────────────────────────────────────────────────
+let usersData=ld('trc_users')||{users:[],activeId:null};
+let uid=null,sess=null,hist=null,hmMode='cur',editIdx=null,editSnap=null,charts={};
+const sKey=id=>'trc_sess_'+id, hKey=id=>'trc_hist_'+id;
 
-(function seed(){
-  if(!hist.length){
-    hist=[
-      {date:'2025-05-14',clubs:[
-        {name:'56° Wedge',pure:6,hit:4,thin:0,top:0,hook:0,slice:0},
-        {name:'Pitching Wedge',pure:4,hit:5,thin:0,top:0,hook:0,slice:1},
-        {name:'9 Iron',pure:4,hit:2,thin:1,top:2,hook:0,slice:1},
-        {name:'8 Iron',pure:6,hit:2,thin:1,top:0,hook:0,slice:1},
-        {name:'7 Iron',pure:8,hit:1,thin:0,top:0,hook:1,slice:0},
-        {name:'6 Iron',pure:8,hit:2,thin:0,top:0,hook:0,slice:0},
-        {name:'5 Iron',pure:4,hit:3,thin:1,top:2,hook:0,slice:0},
-        {name:'7 Iron (Tee)',pure:3,hit:6,thin:0,top:0,hook:1,slice:0}
-      ]},
-      {date:'2025-05-16',clubs:[
-        {name:'56° Wedge',pure:5,hit:1,thin:1,top:3,hook:0,slice:1},
-        {name:'Pitching Wedge',pure:10,hit:0,thin:0,top:0,hook:0,slice:0},
-        {name:'9 Iron',pure:7,hit:0,thin:0,top:3,hook:0,slice:0},
-        {name:'8 Iron',pure:6,hit:1,thin:1,top:1,hook:0,slice:1},
-        {name:'7 Iron',pure:8,hit:1,thin:0,top:1,hook:0,slice:0},
-        {name:'6 Iron',pure:7,hit:0,thin:2,top:0,hook:1,slice:0}
-      ]}
-    ];
-    sv('trc_hist',hist);
+// Migrate legacy single-user data
+(function migrate(){
+  const ls=ld('trc_sess'),lh=ld('trc_hist');
+  if((ls||lh)&&!usersData.users.length){
+    const id=genId();
+    usersData.users.push({id,name:'Player 1'});
+    usersData.activeId=id;
+    if(ls)sv(sKey(id),ls);
+    if(lh)sv(hKey(id),lh);
+    localStorage.removeItem('trc_sess');
+    localStorage.removeItem('trc_hist');
+    sv('trc_users',usersData);
   }
-  if(!sess.clubs.length){sess={date:todayISO(),clubs:[]};sv('trc_sess',sess)}
-  document.getElementById('sess-date').value=sess.date||todayISO();
-  renderLog();
+  renderUserScreen();
 })();
 
+function saveSess(){sv(sKey(uid),sess)}
+function saveHist(){sv(hKey(uid),hist)}
+function saveUsers(){sv('trc_users',usersData)}
+
+// ── USER SCREEN ───────────────────────────────────────────────
+function renderUserScreen(){
+  const el=document.getElementById('user-list');
+  el.innerHTML='';
+  if(!usersData.users.length){
+    el.innerHTML='<div class="empty" style="padding:16px 0">No players yet. Add one below.</div>';
+    return;
+  }
+  usersData.users.forEach(u=>{
+    const h=ld(hKey(u.id))||[];
+    const shots=h.flatMap(s=>s.clubs||[]).reduce((s,c)=>s+clubTot(c),0);
+    const btn=document.createElement('button');btn.className='user-btn';
+    btn.innerHTML=`<div class="u-dot">${initial(u.name)}</div><div class="u-label"><div class="u-name">${u.name}</div><div class="u-stats">${h.length} session${h.length!==1?'s':''} · ${shots} shots</div></div><div class="u-arrow">›</div>`;
+    btn.onclick=()=>enterApp(u.id);
+    el.appendChild(btn);
+  });
+}
+
+function enterApp(id){
+  uid=id;
+  usersData.activeId=id;
+  saveUsers();
+  sess=ld(sKey(id))||{date:todayISO(),clubs:[]};
+  hist=ld(hKey(id))||[];
+  const u=usersData.users.find(u=>u.id===id);
+  document.getElementById('user-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('chip-initial').textContent=initial(u.name);
+  document.getElementById('chip-name').textContent=u.name;
+  document.getElementById('sess-date').value=sess.date||todayISO();
+  go('log');
+}
+
+function switchUser(){
+  if(uid)saveSess();
+  uid=null;sess=null;hist=null;
+  Object.values(charts).forEach(c=>{try{c.destroy()}catch{}});charts={};
+  document.getElementById('app').style.display='none';
+  document.getElementById('user-screen').style.display='flex';
+  renderUserScreen();
+}
+
+function showAddUser(){document.getElementById('add-user-modal').classList.add('on');setTimeout(()=>document.getElementById('new-user-inp').focus(),80)}
+function closeAddUser(){document.getElementById('add-user-modal').classList.remove('on');document.getElementById('new-user-inp').value=''}
+function confirmAddUser(){
+  const name=document.getElementById('new-user-inp').value.trim();
+  if(!name){alert('Please enter a name.');return}
+  const id=genId();usersData.users.push({id,name});saveUsers();closeAddUser();renderUserScreen();
+}
+document.getElementById('new-user-inp').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddUser()});
+
+// ── NAV ───────────────────────────────────────────────────────
 function go(v){
   document.querySelectorAll('.view').forEach(e=>e.classList.remove('on'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(t=>t.classList.remove('on'));
   document.getElementById('v-'+v).classList.add('on');
-  document.getElementById('nb-'+v).classList.add('on');
+  document.querySelectorAll('.nav-btn')[{log:0,heatmap:1,charts:2,history:3,profile:4}[v]].classList.add('on');
   if(v==='heatmap')renderHM();
   if(v==='charts')renderCharts();
   if(v==='history')renderHist();
-  window.scrollTo(0,0);
+  if(v==='profile')renderProfile();
 }
 
-// VOICE
-let recognition=null,isListening=false;
-const CLUB_ALIASES={'fifty six wedge':'56° Wedge','56 degree wedge':'56° Wedge','56 wedge':'56° Wedge','sand wedge':'56° Wedge','lob wedge':'56° Wedge','pitching wedge':'Pitching Wedge','pitch wedge':'Pitching Wedge','pw':'Pitching Wedge','gap wedge':'Pitching Wedge','nine iron':'9 Iron','9 iron':'9 Iron','eight iron':'8 Iron','8 iron':'8 Iron','seven iron off the tee':'7 Iron (Tee)','7 iron off the tee':'7 Iron (Tee)','seven iron':'7 Iron','7 iron':'7 Iron','six iron':'6 Iron','6 iron':'6 Iron','five iron':'5 Iron','5 iron':'5 Iron','four iron':'4 Iron','4 iron':'4 Iron','three iron':'3 Iron','3 iron':'3 Iron','hybrid':'Hybrid','rescue':'Hybrid','three wood':'3 Wood','3 wood':'3 Wood','five wood':'5 Wood','5 wood':'5 Wood','driver off the tee':'Driver (Tee)','driver':'Driver','the driver':'Driver'};
-const CAT_ALIASES={'pure':'pure','pures':'pure','clean':'pure','cleans':'pure','hit':'hit','hits':'hit','solid':'hit','solids':'hit','thin':'thin','thins':'thin','thinned':'thin','top':'top','tops':'top','topped':'top','hook':'hook','hooks':'hook','draw':'hook','draws':'hook','slice':'slice','slices':'slice','fade':'slice','fades':'slice','push':'slice'};
-const WORD_NUMS={'zero':0,'one':1,'two':2,'three':3,'four':4,'five':5,'six':6,'seven':7,'eight':8,'nine':9,'ten':10};
+// ── PROFILE ───────────────────────────────────────────────────
+function renderProfile(){
+  const u=usersData.users.find(u=>u.id===uid);if(!u)return;
+  document.getElementById('profile-name').textContent=u.name;
+  document.getElementById('profile-meta').textContent='Player profile';
+  document.getElementById('rename-inp').value=u.name;
+  const allClubs=(hist||[]).flatMap(s=>s.clubs||[]);
+  const tot=sessTot(allClubs),g=grand(tot),pp=g?Math.round(tot.pure/g*100):0;
+  document.getElementById('profile-stats').innerHTML=[
+    {v:(hist||[]).length,l:'Sessions',c:'var(--text)'},{v:allClubs.reduce((s,c)=>s+clubTot(c),0),l:'Total shots',c:'var(--text)'},
+    {v:pp+'%',l:'Overall pure',c:'var(--pure)'},{v:tot.slice,l:'Total slices',c:'var(--slice)'},
+  ].map(s=>`<div class="stat"><div class="stat-v" style="color:${s.c}">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
+}
+function renameUser(){
+  const name=document.getElementById('rename-inp').value.trim();if(!name){alert('Enter a name.');return}
+  const u=usersData.users.find(u=>u.id===uid);if(u)u.name=name;saveUsers();
+  document.getElementById('chip-initial').textContent=initial(name);
+  document.getElementById('chip-name').textContent=name;
+  document.getElementById('profile-name').textContent=name;
+  alert('Name updated!');
+}
+function deleteUser(){
+  const u=usersData.users.find(u=>u.id===uid);
+  if(!confirm(`Delete all data for "${u?.name}"? This cannot be undone.`))return;
+  localStorage.removeItem(sKey(uid));localStorage.removeItem(hKey(uid));
+  usersData.users=usersData.users.filter(u=>u.id!==uid);saveUsers();switchUser();
+}
 
+// ── LOG ───────────────────────────────────────────────────────
+function setSessDate(v){sess.date=v;saveSess();document.getElementById('log-meta').textContent=fmtDate(v)}
+function renderLog(){
+  document.getElementById('log-meta').textContent=fmtDate(sess.date);
+  document.getElementById('sess-date').value=sess.date||todayISO();
+  const g=document.getElementById('clubs-log');g.innerHTML='';
+  if(!sess.clubs.length)g.innerHTML='<div class="empty">No clubs yet.<br>Use voice or add one below.</div>';
+  else sess.clubs.forEach((c,i)=>g.appendChild(mkCard(c,i,'log')));
+  renderPresets('presets-log',sess.clubs,n=>addClub(n));
+}
+
+function mkCard(club,ci,mode){
+  const pfx=mode==='edit'?'e':'l';
+  const d=document.createElement('div');d.className='card';
+  d.innerHTML=`
+    <div class="card-hdr" id="${pfx}${ci}-hdr">
+      <div class="club-name-wrap">
+        <div class="club-name">${club.name}</div>
+        <button class="rename-btn" onclick="startRename(${ci},'${mode}')" title="Rename">✎</button>
+      </div>
+      <div class="club-meta">
+        <span class="club-tot" id="${pfx}${ci}-tot">${clubTot(club)} shots</span>
+        <button class="del-btn" onclick="${mode==='edit'?`editDel(${ci})`:`logDel(${ci})`}">✕</button>
+      </div>
+    </div>
+    <div class="shot-grid">${CATS.map(cat=>`
+      <div class="shot-col">
+        <div class="shot-lbl">${cat}</div>
+        <div class="counter">
+          <button class="c-btn" onclick="${mode==='edit'?`editAdj(${ci},'${cat}',-1)`:`logAdj(${ci},'${cat}',-1)`}">−</button>
+          <div class="c-val ${club[cat]>0?VCLS[cat]:''}" id="${pfx}${ci}-${cat}">${club[cat]}</div>
+          <button class="c-btn" onclick="${mode==='edit'?`editAdj(${ci},'${cat}',1)`:`logAdj(${ci},'${cat}',1)`}">+</button>
+        </div>
+      </div>`).join('')}
+    </div>`;
+  return d;
+}
+
+function startRename(ci,mode){
+  const pfx=mode==='edit'?'e':'l';
+  const hdr=document.getElementById(`${pfx}${ci}-hdr`);
+  const clubs=mode==='edit'?editSnap.clubs:sess.clubs;
+  const cur=clubs[ci].name;
+  const tot=clubTot(clubs[ci]);
+  hdr.innerHTML=`
+    <div class="rename-row">
+      <input class="rename-inp" id="${pfx}${ci}-rin" value="${cur}">
+      <button class="rename-ok" onclick="confirmRename(${ci},'${mode}')">OK</button>
+      <button class="rename-cancel" onclick="${mode==='edit'?'renderEditClubs()':'renderLog()'}">✕</button>
+    </div>
+    <div class="club-meta"><span class="club-tot" id="${pfx}${ci}-tot">${tot} shots</span></div>`;
+  const inp=document.getElementById(`${pfx}${ci}-rin`);
+  inp.focus();inp.select();
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')confirmRename(ci,mode)});
+}
+
+function confirmRename(ci,mode){
+  const pfx=mode==='edit'?'e':'l';
+  const inp=document.getElementById(`${pfx}${ci}-rin`);
+  if(!inp)return;
+  const name=inp.value.trim();if(!name)return;
+  if(mode==='edit'){editSnap.clubs[ci].name=name;renderEditClubs();}
+  else{sess.clubs[ci].name=name;saveSess();renderLog();}
+}
+
+function logAdj(ci,cat,d){
+  const v=Math.max(0,sess.clubs[ci][cat]+d);sess.clubs[ci][cat]=v;saveSess();
+  const el=document.getElementById(`l${ci}-${cat}`);if(el){el.textContent=v;el.className='c-val '+(v>0?VCLS[cat]:'')}
+  const t=document.getElementById(`l${ci}-tot`);if(t)t.textContent=clubTot(sess.clubs[ci])+' shots';
+}
+function logDel(ci){sess.clubs.splice(ci,1);saveSess();renderLog()}
+function addClub(n){if(sess.clubs.find(c=>c.name===n))return;sess.clubs.push(newClub(n));saveSess();renderLog()}
+function addCustom(){const i=document.getElementById('custom-in');const n=i.value.trim();if(n){addClub(n);i.value=''}}
+document.getElementById('custom-in').addEventListener('keydown',e=>{if(e.key==='Enter')addCustom()});
+function clearSess(){if(!confirm('Clear this session?'))return;sess={date:todayISO(),clubs:[]};saveSess();document.getElementById('sess-date').value=sess.date;renderLog()}
+function archiveSess(){
+  if(!sess.clubs.length){alert('No clubs logged yet.');return}
+  hist.unshift(JSON.parse(JSON.stringify(sess)));saveHist();
+  sess={date:todayISO(),clubs:[]};saveSess();
+  document.getElementById('sess-date').value=sess.date;renderLog();alert('Session saved!');
+}
+function renderPresets(id,used,cb){
+  const u=new Set(used.map(c=>c.name));
+  document.getElementById(id).innerHTML=PRESETS.filter(n=>!u.has(n)).slice(0,12)
+    .map(n=>`<button class="preset-btn" onclick='(${cb.toString()})("${n}")'>${n}</button>`).join('');
+}
+
+// ── VOICE ─────────────────────────────────────────────────────
+let recognition=null,isListening=false;
+function micEl(){return document.getElementById('mic-btn')}
 function initSpeech(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){setVoiceErr('Speech recognition not supported. Use Safari on iOS 17+ or Chrome on desktop.');return false}
+  if(!SR){setVoiceErr('Speech recognition not supported. Use Safari 16.4+ on iPhone or Chrome on desktop.');return false}
   recognition=new SR();recognition.continuous=false;recognition.interimResults=true;recognition.lang='en-US';
-  recognition.onstart=()=>{isListening=true;setVoiceStatus('Listening… speak now');document.getElementById('mic-btn').classList.add('listening')};
-  recognition.onend=()=>{isListening=false;document.getElementById('mic-btn').classList.remove('listening')};
-  recognition.onerror=e=>{isListening=false;document.getElementById('mic-btn').classList.remove('listening');if(e.error==='not-allowed')setVoiceErr('Mic access denied — allow microphone in browser settings.');else if(e.error==='no-speech')setVoiceStatus('No speech detected. Tap mic and try again.');else setVoiceErr('Error: '+e.error)};
+  recognition.onstart=()=>{isListening=true;setVoiceStatus('<strong>Listening…</strong> speak now');micEl().classList.add('listening')};
+  recognition.onend=()=>{isListening=false;micEl().classList.remove('listening')};
+  recognition.onerror=e=>{isListening=false;micEl().classList.remove('listening');if(e.error==='not-allowed')setVoiceErr('Mic access denied — allow microphone in browser settings.');else if(e.error==='no-speech')setVoiceStatus('<strong>Voice input</strong> — no speech, try again.');else setVoiceErr('Error: '+e.error)};
   recognition.onresult=e=>{
     const interim=[...e.results].filter(r=>!r.isFinal).map(r=>r[0].transcript).join('');
     const final=[...e.results].filter(r=>r.isFinal).map(r=>r[0].transcript).join('');
@@ -332,180 +599,134 @@ function toggleVoice(){
   if(isListening){recognition&&recognition.stop();return}
   if(!recognition&&!initSpeech())return;
   clearVoiceResult();
-  try{recognition.start()}catch(e){setVoiceErr('Could not start mic. Try again.')}
+  try{recognition.start()}catch(e){recognition=null;if(initSpeech())try{recognition.start()}catch{setVoiceErr('Could not start mic.')}}
 }
 function parseVoice(text){
-  text=text.replace(/[,;:]+/g,' ').replace(/\s+/g,' ').trim();
-  let foundClub=null;
-  const aliasKeys=Object.keys(CLUB_ALIASES).sort((a,b)=>b.length-a.length);
-  for(const k of aliasKeys){if(text.includes(k)){foundClub=CLUB_ALIASES[k];break}}
-  if(!foundClub){for(const c of sess.clubs){if(text.includes(c.name.toLowerCase())){foundClub=c.name;break}}}
-  if(!foundClub){for(const p of PRESETS){if(text.includes(p.toLowerCase())){foundClub=p;break}}}
-  if(!foundClub){setVoiceErr('Couldn\'t identify a club. Try "7 iron, 6 pure, 2 hits".');return}
+  text=text.replace(/[,;:.]+/g,' ').replace(/\s+/g,' ').trim();
+  let fc=null;
+  const keys=Object.keys(CLUB_ALIASES).sort((a,b)=>b.length-a.length);
+  for(const k of keys){if(text.includes(k)){fc=CLUB_ALIASES[k];break}}
+  if(!fc){for(const c of sess.clubs){if(text.includes(c.name.toLowerCase())){fc=c.name;break}}}
+  if(!fc){for(const p of PRESETS){if(text.includes(p.toLowerCase())){fc=p;break}}}
+  if(!fc){setVoiceErr('Couldn\'t identify a club. Try "7 iron, 6 pure, 2 hits".');return}
   let t2=text;
-  for(const[w,n] of Object.entries(WORD_NUMS))t2=t2.replace(new RegExp('\\b'+w+'\\b','g'),n);
+  for(const[w,n] of Object.entries(WORD_NUMS))t2=t2.replace(new RegExp('\\b'+w+'\\b','g'),String(n));
   const counts={};const pat=/(\d+)\s+([a-z]+)/g;let m;
   while((m=pat.exec(t2))!==null){const cat=CAT_ALIASES[m[2]];if(cat)counts[cat]=(counts[cat]||0)+parseInt(m[1])}
-  if(!Object.keys(counts).length){setVoiceErr('Got "'+foundClub+'" but couldn\'t parse counts. Try "7 iron 6 pure 2 hits".');return}
-  let club=sess.clubs.find(c=>c.name===foundClub);
-  if(!club){club=newClub(foundClub);sess.clubs.push(club)}
+  if(!Object.keys(counts).length){setVoiceErr('Heard "'+fc+'" but couldn\'t parse counts.');return}
+  let club=sess.clubs.find(c=>c.name===fc);
+  if(!club){club=newClub(fc);sess.clubs.push(club)}
   for(const[cat,n] of Object.entries(counts)){if(CATS.includes(cat))club[cat]=Math.min(n,20)}
-  sv('trc_sess',sess);renderLog();
-  const summary=Object.entries(counts).map(([c,n])=>n+' '+c+(n!==1?'s':'')).join(', ');
-  setVoiceOk(foundClub+' — '+summary);
+  saveSess();renderLog();
+  setVoiceOk(fc+' — '+Object.entries(counts).map(([c,n])=>n+' '+c+(n!==1?'s':'')).join(', '));
 }
-function setVoiceStatus(t){document.getElementById('voice-status').innerHTML='<strong>Voice input</strong> — '+t}
+function setVoiceStatus(t){document.getElementById('voice-status').innerHTML=t}
 function setVoiceOk(t){const r=document.getElementById('voice-result');r.className='voice-result ok';r.textContent='✓ '+t}
-function setVoiceErr(t){const r=document.getElementById('voice-result');r.className='voice-result err';r.textContent='✗ '+t;document.getElementById('mic-btn').classList.add('error');setTimeout(()=>document.getElementById('mic-btn').classList.remove('error'),2000)}
-function clearVoiceResult(){const r=document.getElementById('voice-result');r.className='voice-result';r.textContent=''}
+function setVoiceErr(t){const r=document.getElementById('voice-result');r.className='voice-result err';r.textContent='✗ '+t;micEl().classList.add('error');setTimeout(()=>micEl().classList.remove('error'),2000)}
+function clearVoiceResult(){document.getElementById('voice-result').className='voice-result';setVoiceStatus('<strong>Voice input</strong> — listening…')}
 
-// LOG
-function setSessDate(v){sess.date=v;sv('trc_sess',sess);document.getElementById('log-meta').textContent=fmtDate(v)}
-function renderLog(){
-  document.getElementById('log-meta').textContent=fmtDate(sess.date);
-  document.getElementById('sess-date').value=sess.date||todayISO();
-  const g=document.getElementById('clubs-log');g.innerHTML='';
-  if(!sess.clubs.length){g.innerHTML='<div class="empty">No clubs yet.<br>Use voice input or add a club below.</div>'}
-  else sess.clubs.forEach((c,i)=>g.appendChild(mkCard(c,i,'log')));
-  renderPresets('presets-log',sess.clubs,n=>addClub(n));
-}
-function mkCard(club,ci,mode){
-  const pfx=mode==='edit'?'e':'l',tot=clubTot(club);
-  const d=document.createElement('div');d.className='card';
-  d.innerHTML=`<div class="card-hdr"><div class="club-name">${club.name}</div><div class="club-meta"><span class="club-tot" id="${pfx}${ci}-tot">${tot} shots</span><button class="del-btn" onclick="${mode==='edit'?`editDel(${ci})`:`logDel(${ci})`}">✕</button></div></div>
-  <div class="shot-grid">${CATS.map(cat=>`<div class="shot-col"><div class="shot-lbl">${cat}</div><div class="counter"><button class="c-btn" onclick="${mode==='edit'?`editAdj(${ci},'${cat}',-1)`:`logAdj(${ci},'${cat}',-1)`}">−</button><div class="c-val ${club[cat]>0?VCLS[cat]:''}" id="${pfx}${ci}-${cat}">${club[cat]}</div><button class="c-btn" onclick="${mode==='edit'?`editAdj(${ci},'${cat}',1)`:`logAdj(${ci},'${cat}',1)`}">+</button></div></div>`).join('')}</div>`;
-  return d;
-}
-function logAdj(ci,cat,d){
-  const v=Math.max(0,sess.clubs[ci][cat]+d);sess.clubs[ci][cat]=v;sv('trc_sess',sess);
-  const el=document.getElementById(`l${ci}-${cat}`);if(el){el.textContent=v;el.className='c-val '+(v>0?VCLS[cat]:'')}
-  const t=document.getElementById(`l${ci}-tot`);if(t)t.textContent=clubTot(sess.clubs[ci])+' shots';
-}
-function logDel(ci){sess.clubs.splice(ci,1);sv('trc_sess',sess);renderLog()}
-function addClub(n){if(sess.clubs.find(c=>c.name===n))return;sess.clubs.push(newClub(n));sv('trc_sess',sess);renderLog()}
-function addCustom(){const i=document.getElementById('custom-in');const n=i.value.trim();if(n){addClub(n);i.value=''}}
-document.getElementById('custom-in').addEventListener('keydown',e=>{if(e.key==='Enter')addCustom()});
-function renderPresets(id,used,cb){
-  const u=new Set(used.map(c=>c.name));
-  document.getElementById(id).innerHTML=PRESETS.filter(n=>!u.has(n)).slice(0,12).map(n=>`<button class="preset-btn" onclick='(${cb.toString()})("${n}")'>${n}</button>`).join('');
-}
-function clearSess(){if(!confirm('Clear this session?'))return;sess={date:todayISO(),clubs:[]};sv('trc_sess',sess);document.getElementById('sess-date').value=sess.date;renderLog()}
-function archiveSess(){
-  if(!sess.clubs.length){alert('No clubs logged yet.');return}
-  hist.unshift(JSON.parse(JSON.stringify(sess)));sv('trc_hist',hist);
-  sess={date:todayISO(),clubs:[]};sv('trc_sess',sess);
-  document.getElementById('sess-date').value=sess.date;renderLog();alert('Session saved!');
-}
-
-// HEATMAP
+// ── HEATMAP ───────────────────────────────────────────────────
 function setHM(m){hmMode=m;['cur','avg','cmp'].forEach(x=>document.getElementById('hmt-'+x).classList.toggle('on',x===m));renderHM()}
 function renderHM(){
-  const all=[sess,...hist];
-  if(hmMode==='cur'){document.getElementById('hm-meta').textContent=fmtDate(sess.date);renderStatsBar(sess.clubs);const b=document.getElementById('hm-body');b.innerHTML='';b.appendChild(mkTable(sess.clubs))}
-  else if(hmMode==='avg'){document.getElementById('hm-meta').textContent=all.length+' session'+(all.length===1?'':'s')+' averaged';const avg=buildAvg(all);renderStatsBar(avg.map(c=>{const r=newClub(c.name);CATS.forEach(k=>r[k]=Math.round(c[k]));return r}));const b=document.getElementById('hm-body');b.innerHTML='<div class="note">Average shots per session across all sessions</div>';b.appendChild(mkAvgTable(avg))}
-  else{document.getElementById('hm-meta').textContent=all.length+' sessions';renderStatsBar(sess.clubs);const b=document.getElementById('hm-body');b.innerHTML='';b.appendChild(mkCompare(all))}
+  const all=[sess,...hist];const b=document.getElementById('hm-body');b.innerHTML='';
+  if(hmMode==='cur'){document.getElementById('hm-meta').textContent=fmtDate(sess.date);renderStats(sess.clubs);b.appendChild(mkTable(sess.clubs));}
+  else if(hmMode==='avg'){document.getElementById('hm-meta').textContent=all.length+' session'+(all.length===1?'':'s')+' averaged';const avg=buildAvg(all);renderStats(avg.map(c=>{const r=newClub(c.name);CATS.forEach(k=>r[k]=Math.round(c[k]));return r}));const note=document.createElement('div');note.style.cssText='font-size:10px;color:var(--muted);margin-bottom:10px';note.textContent='Average shots per session';b.appendChild(note);b.appendChild(mkAvgTable(avg));}
+  else{document.getElementById('hm-meta').textContent=all.length+' sessions';renderStats(sess.clubs);b.appendChild(mkCompare(all));}
 }
-function renderStatsBar(clubs){
-  const t=sessTot(clubs),g=grand(t);
-  if(!g){document.getElementById('hm-stats').innerHTML='';return}
+function renderStats(clubs){
+  const t=sessTot(clubs),g=grand(t);if(!g){document.getElementById('hm-stats').innerHTML='';return}
   const pp=Math.round(t.pure/g*100),mishits=t.thin+t.top+t.hook+t.slice;
-  document.getElementById('hm-stats').innerHTML=[{v:g,l:'Total',c:'var(--text)'},{v:t.pure,l:'Pure',c:'var(--pure)'},{v:pp+'%',l:'Pure %',c:'var(--pure)'},{v:t.hit,l:'Hits',c:'var(--hit)'},{v:mishits,l:'Mishits',c:'var(--thin)'},{v:t.slice,l:'Slices',c:'var(--slice)'},{v:t.hook,l:'Hooks',c:'var(--hook)'}].map(s=>`<div class="stat"><div class="stat-v" style="color:${s.c}">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
+  document.getElementById('hm-stats').innerHTML=[
+    {v:g,l:'Total',c:'var(--text)'},{v:t.pure,l:'Pure',c:'var(--pure)'},{v:pp+'%',l:'Pure %',c:'var(--pure)'},
+    {v:t.hit,l:'Hits',c:'var(--hit)'},{v:mishits,l:'Mishits',c:'var(--thin)'},{v:t.slice,l:'Slices',c:'var(--slice)'},{v:t.hook,l:'Hooks',c:'var(--hook)'},
+  ].map(s=>`<div class="stat"><div class="stat-v" style="color:${s.c}">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
 }
 function mkTable(clubs){
   const w=document.createElement('div');w.className='tw';
   const t=sessTot(clubs),g=grand(t);
-  w.innerHTML=`<table><thead><tr><th>Club</th>${CATS.map(c=>`<th>${c}</th>`).join('')}<th>Total</th></tr></thead><tbody>${clubs.map(club=>{const tot=clubTot(club);return`<tr><td>${club.name}</td>${CATS.map(c=>{const v=club[c];return`<td><span class="cell ${v>0?CCLS[c]:'cell-zero'}">${v>0?v:'–'}</span></td>`}).join('')}<td style="color:var(--muted);font-size:11px">${tot}</td></tr>`}).join('')}<tr class="tot-row"><td>Totals</td>${CATS.map(c=>{const v=t[c];return`<td><span class="cell ${v>0?CCLS[c]:'cell-zero'}">${v||'–'}</span></td>`}).join('')}<td style="font-weight:500">${g}</td></tr></tbody></table>`;
-  return w;
+  w.innerHTML=`<table><thead><tr><th>Club</th>${CATS.map(c=>`<th>${c}</th>`).join('')}<th>Tot</th></tr></thead><tbody>
+    ${clubs.map(club=>{const tot=clubTot(club);return`<tr><td>${club.name}</td>${CATS.map(c=>{const v=club[c];return`<td><span class="cell ${v>0?CCLS[c]:'cell-zero'}">${v>0?v:'–'}</span></td>`}).join('')}<td style="color:var(--muted);font-size:10px">${tot}</td></tr>`}).join('')}
+    <tr class="tot-row"><td>Totals</td>${CATS.map(c=>{const v=t[c];return`<td><span class="cell ${v>0?CCLS[c]:'cell-zero'}">${v||'–'}</span></td>`}).join('')}<td style="font-weight:500">${g}</td></tr>
+  </tbody></table>`;return w;
 }
 function buildAvg(sessions){
   const names=[...new Set(sessions.flatMap(s=>s.clubs.map(c=>c.name)))];
-  return names.map(name=>{
-    const app=sessions.filter(s=>s.clubs.find(c=>c.name===name));
-    const m=newClub(name);app.forEach(s=>{const c=s.clubs.find(c=>c.name===name);CATS.forEach(k=>m[k]+=c[k])});
-    CATS.forEach(k=>m[k]=m[k]/app.length);return m;
-  });
+  return names.map(name=>{const app=sessions.filter(s=>s.clubs.find(c=>c.name===name));const m=newClub(name);app.forEach(s=>{const c=s.clubs.find(c=>c.name===name);CATS.forEach(k=>m[k]+=c[k])});CATS.forEach(k=>m[k]=m[k]/app.length);return m;});
 }
 function mkAvgTable(avg){
   const w=document.createElement('div');w.className='tw';
-  w.innerHTML=`<table><thead><tr><th>Club</th>${CATS.map(c=>`<th>${c}</th>`).join('')}<th>Avg</th></tr></thead><tbody>${avg.map(club=>{const tot=CATS.reduce((s,k)=>s+club[k],0);return`<tr><td>${club.name}</td>${CATS.map(c=>{const v=club[c],cv=Math.round(v);return`<td><span class="cell ${cv>0?CCLS[c]:'cell-zero'}">${v===0?'–':v%1===0?v:v.toFixed(1)}</span></td>`}).join('')}<td style="color:var(--muted);font-size:11px">${tot%1===0?tot:tot.toFixed(1)}</td></tr>`}).join('')}</tbody></table>`;
-  return w;
+  w.innerHTML=`<table><thead><tr><th>Club</th>${CATS.map(c=>`<th>${c}</th>`).join('')}<th>Avg</th></tr></thead><tbody>
+    ${avg.map(club=>{const tot=CATS.reduce((s,k)=>s+club[k],0);return`<tr><td>${club.name}</td>${CATS.map(c=>{const v=club[c],cv=Math.round(v);return`<td><span class="cell ${cv>0?CCLS[c]:'cell-zero'}">${v===0?'–':v%1===0?v:v.toFixed(1)}</span></td>`}).join('')}<td style="color:var(--muted);font-size:10px">${tot%1===0?tot:tot.toFixed(1)}</td></tr>`}).join('')}
+  </tbody></table>`;return w;
 }
 function mkCompare(sessions){
   if(sessions.length<2){const d=document.createElement('div');d.className='empty';d.textContent='Save at least one session to compare.';return d}
   const names=[...new Set(sessions.flatMap(s=>s.clubs.map(c=>c.name)))];
   const w=document.createElement('div');w.className='tw';
-  const hdrs=sessions.map((s,i)=>`<th colspan="2" style="border-left:1px solid var(--border)">${i===0?'Current':fmtDate(s.date)}</th>`).join('');
-  const sub=sessions.map(()=>`<th style="border-left:1px solid var(--border)">Pure%</th><th>Bad</th>`).join('');
-  const rows=names.map(name=>{
-    const cells=sessions.map(s=>{
-      const club=s.clubs.find(c=>c.name===name),bl='border-left:1px solid var(--border)';
-      if(!club)return`<td style="${bl}" colspan="2"><span style="color:var(--muted)">—</span></td>`;
-      const tot=clubTot(club),pp=tot?Math.round(club.pure/tot*100):0,bad=club.thin+club.top+club.hook+club.slice;
-      const pc=pp>=70?'var(--pure)':pp>=50?'var(--top)':'var(--slice)',bc=bad===0?'var(--muted)':bad<=2?'var(--top)':'var(--slice)';
-      return`<td style="${bl}"><span style="color:${pc};font-weight:500">${pp}%</span></td><td><span style="color:${bc}">${bad||'–'}</span></td>`;
-    }).join('');
-    return`<tr><td>${name}</td>${cells}</tr>`;
-  }).join('');
-  const foot=sessions.map(s=>{const bl='border-left:1px solid var(--border)',t=sessTot(s.clubs),g=grand(t);if(!g)return`<td style="${bl}" colspan="2">—</td>`;const pp=Math.round(t.pure/g*100),pc=pp>=70?'var(--pure)':pp>=50?'var(--top)':'var(--slice)';return`<td style="${bl}"><b style="color:${pc}">${pp}%</b></td><td></td>`}).join('');
-  w.innerHTML=`<table><thead><tr><th>Club</th>${hdrs}</tr><tr><th></th>${sub}</tr></thead><tbody>${rows}<tr class="tot-row"><td>Overall</td>${foot}</tr></tbody></table>`;
-  return w;
+  const hdrs=sessions.map((s,i)=>`<th colspan="2" style="border-left:1px solid var(--bd)">${i===0?'Current':fmtDate(s.date)}</th>`).join('');
+  const sub=sessions.map(()=>`<th style="border-left:1px solid var(--bd)">Pure%</th><th>Bad</th>`).join('');
+  const rows=names.map(name=>{const cells=sessions.map(s=>{const club=s.clubs.find(c=>c.name===name),bl='border-left:1px solid var(--bd)';if(!club)return`<td style="${bl}" colspan="2"><span style="color:var(--muted)">—</span></td>`;const tot=clubTot(club),pp=tot?Math.round(club.pure/tot*100):0,bad=club.thin+club.top+club.hook+club.slice;const pc=pp>=70?'var(--pure)':pp>=50?'var(--top)':'var(--slice)',bc=bad===0?'var(--muted)':bad<=2?'var(--top)':'var(--slice)';return`<td style="${bl}"><span style="color:${pc};font-weight:500">${pp}%</span></td><td><span style="color:${bc}">${bad||'–'}</span></td>`}).join('');return`<tr><td>${name}</td>${cells}</tr>`}).join('');
+  const foot=sessions.map(s=>{const bl='border-left:1px solid var(--bd)',t=sessTot(s.clubs),g=grand(t);if(!g)return`<td style="${bl}" colspan="2">—</td>`;const pp=Math.round(t.pure/g*100),pc=pp>=70?'var(--pure)':pp>=50?'var(--top)':'var(--slice)';return`<td style="${bl}"><b style="color:${pc}">${pp}%</b></td><td></td>`}).join('');
+  w.innerHTML=`<table><thead><tr><th>Club</th>${hdrs}</tr><tr><th></th>${sub}</tr></thead><tbody>${rows}<tr class="tot-row"><td>Overall</td>${foot}</tr></tbody></table>`;return w;
 }
 
-// CHARTS
+// ── CHARTS ────────────────────────────────────────────────────
 function renderCharts(){
   Object.values(charts).forEach(c=>{try{c.destroy()}catch{}});charts={};
   const all=[...hist].reverse();
   const g=document.getElementById('chart-grid');g.innerHTML='';
-  if(!all.length){g.innerHTML='<div class="empty chart-full">Save a session to see charts.</div>';return}
+  const u=usersData.users.find(u=>u.id===uid);
+  document.getElementById('charts-meta').textContent=(u?u.name+' · ':'')+all.length+' session'+(all.length===1?'':'s');
+  if(!all.length){g.innerHTML='<div class="empty">Save a session to see charts.</div>';return}
   const labels=all.map(s=>fmtDate(s.date));
   const pures=all.map(s=>{const t=sessTot(s.clubs),gr=grand(t);return gr?Math.round(t.pure/gr*100):0});
-  const tops=all.map(s=>sessTot(s.clubs).top);
-  const thins=all.map(s=>sessTot(s.clubs).thin);
-  const hooks=all.map(s=>sessTot(s.clubs).hook);
-  const slices=all.map(s=>sessTot(s.clubs).slice);
+  const tops=all.map(s=>sessTot(s.clubs).top),thins=all.map(s=>sessTot(s.clubs).thin);
+  const hooks=all.map(s=>sessTot(s.clubs).hook),slices=all.map(s=>sessTot(s.clubs).slice);
   const bo={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#4a6070',font:{size:9},maxRotation:45,autoSkip:false},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#4a6070',font:{size:9}},grid:{color:'rgba(255,255,255,0.04)'}}}};
-  function mkCC(title,full,h){const c=document.createElement('div');c.className='chart-card'+(full?' chart-full':'');c.innerHTML=`<div class="chart-title">${title}</div><div style="position:relative;width:100%;height:${h||160}px"><canvas></canvas></div>`;g.appendChild(c);return c.querySelector('canvas')}
-  charts.p=new Chart(mkCC('Pure % per session',false,160),{type:'line',data:{labels,datasets:[{label:'Pure %',data:pures,borderColor:'#3fb950',backgroundColor:'rgba(63,185,80,0.08)',tension:.35,fill:true,pointBackgroundColor:'#3fb950',pointRadius:4,pointHoverRadius:6}]},options:{...bo,scales:{...bo.scales,y:{...bo.scales.y,min:0,max:100,ticks:{...bo.scales.y.ticks,callback:v=>v+'%'}}}}});
-  charts.m=new Chart(mkCC('Mishits per session',false,160),{type:'bar',data:{labels,datasets:[{label:'Top',data:tops,backgroundColor:'rgba(227,179,65,.7)',borderColor:'#e3b341',borderWidth:1},{label:'Thin',data:thins,backgroundColor:'rgba(240,136,62,.7)',borderColor:'#f0883e',borderWidth:1},{label:'Hook',data:hooks,backgroundColor:'rgba(192,132,252,.7)',borderColor:'#c084fc',borderWidth:1},{label:'Slice',data:slices,backgroundColor:'rgba(248,81,73,.7)',borderColor:'#f85149',borderWidth:1}]},options:{...bo,plugins:{legend:{display:true,labels:{color:'#4a6070',font:{size:9},boxWidth:8,boxHeight:8}}},scales:{...bo.scales,x:{...bo.scales.x,stacked:true},y:{...bo.scales.y,stacked:true}}}});
+  function mkCC(title){const c=document.createElement('div');c.className='chart-card';c.innerHTML=`<div class="chart-title">${title}</div><div style="position:relative;width:100%;height:170px"><canvas></canvas></div>`;g.appendChild(c);return c.querySelector('canvas')}
+  charts.p=new Chart(mkCC('Pure % per session'),{type:'line',data:{labels,datasets:[{label:'Pure %',data:pures,borderColor:'#3fb950',backgroundColor:'rgba(63,185,80,0.08)',tension:.35,fill:true,pointBackgroundColor:'#3fb950',pointRadius:4}]},options:{...bo,scales:{...bo.scales,y:{...bo.scales.y,min:0,max:100,ticks:{...bo.scales.y.ticks,callback:v=>v+'%'}}}}});
+  charts.m=new Chart(mkCC('Mishits per session'),{type:'bar',data:{labels,datasets:[{label:'Top',data:tops,backgroundColor:'rgba(227,179,65,.7)',borderColor:'#e3b341',borderWidth:1},{label:'Thin',data:thins,backgroundColor:'rgba(240,136,62,.7)',borderColor:'#f0883e',borderWidth:1},{label:'Hook',data:hooks,backgroundColor:'rgba(192,132,252,.7)',borderColor:'#c084fc',borderWidth:1},{label:'Slice',data:slices,backgroundColor:'rgba(248,81,73,.7)',borderColor:'#f85149',borderWidth:1}]},options:{...bo,plugins:{legend:{display:true,labels:{color:'#4a6070',font:{size:9},boxWidth:8,boxHeight:8}}},scales:{...bo.scales,x:{...bo.scales.x,stacked:true},y:{...bo.scales.y,stacked:true}}}});
   if(all.length>=2){
     const clubNames=[...new Set(all.flatMap(s=>s.clubs.map(c=>c.name)))];
-    const cColors=['#3fb950','#7ee787','#e3b341','#f0883e','#c084fc','#f85149','#58a6ff','#ffa657'];
-    charts.cl=new Chart(mkCC('Pure % by club',true,190),{type:'line',data:{labels,datasets:clubNames.map((n,i)=>({label:n,data:all.map(s=>{const c=s.clubs.find(c=>c.name===n);if(!c)return null;const t=clubTot(c);return t?Math.round(c.pure/t*100):0}),borderColor:cColors[i%cColors.length],backgroundColor:'transparent',tension:.3,pointRadius:3,pointHoverRadius:5,spanGaps:true}))},options:{...bo,plugins:{legend:{display:true,labels:{color:'#4a6070',font:{size:9},boxWidth:8,boxHeight:8}}},scales:{...bo.scales,y:{...bo.scales.y,min:0,max:100,ticks:{...bo.scales.y.ticks,callback:v=>v+'%'}}}}});
+    const cols=['#3fb950','#7ee787','#e3b341','#f0883e','#c084fc','#f85149','#58a6ff','#ffa657'];
+    charts.cl=new Chart(mkCC('Pure % by club'),{type:'line',data:{labels,datasets:clubNames.map((n,i)=>({label:n,data:all.map(s=>{const c=s.clubs.find(c=>c.name===n);if(!c)return null;const t=clubTot(c);return t?Math.round(c.pure/t*100):0}),borderColor:cols[i%cols.length],backgroundColor:'transparent',tension:.3,pointRadius:3,spanGaps:true}))},options:{...bo,plugins:{legend:{display:true,labels:{color:'#4a6070',font:{size:9},boxWidth:8,boxHeight:8}}},scales:{...bo.scales,y:{...bo.scales.y,min:0,max:100,ticks:{...bo.scales.y.ticks,callback:v=>v+'%'}}}}});
   }
 }
 
-// HISTORY
+// ── HISTORY ───────────────────────────────────────────────────
 function renderHist(){
+  const u=usersData.users.find(u=>u.id===uid);
+  document.getElementById('hist-meta').textContent=u?u.name:'';
   const el=document.getElementById('hist-list');
-  if(!hist.length){el.innerHTML='<div class="empty">No saved sessions yet.<br>Log some shots and tap Save.</div>';return}
+  if(!hist.length){el.innerHTML='<div class="empty">No saved sessions yet.<br>Log shots and tap Save.</div>';return}
   el.innerHTML='';
   hist.forEach((s,i)=>{
     const t=sessTot(s.clubs),g=grand(t),pp=g?Math.round(t.pure/g*100):0;
     const c=document.createElement('div');c.className='h-card';
     c.innerHTML=`<div class="h-date">${fmtDate(s.date)}</div><div class="h-meta">${s.clubs.length} clubs · ${g} shots</div>
-    <div class="pills">
-      <span class="pill" style="background:var(--pure-bg);color:var(--pure);border:1px solid var(--pure-b)">${t.pure} pure (${pp}%)</span>
-      ${t.slice?`<span class="pill" style="background:var(--slice-bg);color:var(--slice);border:1px solid var(--slice-b)">${t.slice} slice${t.slice>1?'s':''}</span>`:''}
-      ${t.hook?`<span class="pill" style="background:var(--hook-bg);color:var(--hook);border:1px solid var(--hook-b)">${t.hook} hook${t.hook>1?'s':''}</span>`:''}
-      ${t.top?`<span class="pill" style="background:var(--top-bg);color:var(--top);border:1px solid var(--top-b)">${t.top} top${t.top>1?'s':''}</span>`:''}
-      ${t.thin?`<span class="pill" style="background:var(--thin-bg);color:var(--thin);border:1px solid var(--thin-b)">${t.thin} thin${t.thin>1?'s':''}</span>`:''}
-    </div>
-    <div class="h-actions">
-      <button class="btn btn-sm" onclick="openEdit(${i})"><i class="ti ti-edit" style="font-size:12px;vertical-align:-1px"></i> Edit</button>
-      <button class="btn btn-sm btn-red" onclick="delSess(${i})">Delete</button>
-    </div>`;
+      <div class="pills">
+        <span class="pill" style="background:var(--pure-bg);color:var(--pure);border:1px solid var(--pure-b)">${t.pure} pure (${pp}%)</span>
+        ${t.slice?`<span class="pill" style="background:var(--slice-bg);color:var(--slice);border:1px solid var(--slice-b)">${t.slice} slice${t.slice>1?'s':''}</span>`:''}
+        ${t.hook?`<span class="pill" style="background:var(--hook-bg);color:var(--hook);border:1px solid var(--hook-b)">${t.hook} hook${t.hook>1?'s':''}</span>`:''}
+        ${t.top?`<span class="pill" style="background:var(--top-bg);color:var(--top);border:1px solid var(--top-b)">${t.top} top${t.top>1?'s':''}</span>`:''}
+        ${t.thin?`<span class="pill" style="background:var(--thin-bg);color:var(--thin);border:1px solid var(--thin-b)">${t.thin} thin${t.thin>1?'s':''}</span>`:''}
+      </div>
+      <div class="h-actions">
+        <button class="btn btn-sm" onclick="openEdit(${i})">Edit</button>
+        <button class="btn btn-sm btn-red" onclick="delSess(${i})">Delete</button>
+      </div>`;
     el.appendChild(c);
   });
 }
-function delSess(i){if(!confirm('Delete this session?'))return;hist.splice(i,1);sv('trc_hist',hist);renderHist()}
-function clearAll(){if(!confirm('Delete ALL sessions?'))return;hist=[];sv('trc_hist',hist);renderHist()}
+function delSess(i){if(!confirm('Delete this session?'))return;hist.splice(i,1);saveHist();renderHist()}
+function clearAll(){if(!confirm('Delete ALL sessions for this player?'))return;hist=[];saveHist();renderHist()}
 
-// EDIT MODAL
+// ── EDIT MODAL ────────────────────────────────────────────────
 function openEdit(i){editIdx=i;editSnap=JSON.parse(JSON.stringify(hist[i]));document.getElementById('edit-date').value=editSnap.date||'';renderEditClubs();document.getElementById('modal').classList.add('on')}
 function closeModal(){document.getElementById('modal').classList.remove('on');editIdx=null;editSnap=null}
 function renderEditClubs(){
   const g=document.getElementById('edit-clubs');g.innerHTML='';
-  if(!editSnap.clubs.length){g.innerHTML='<div class="empty">No clubs. Add one below.</div>'}
+  if(!editSnap.clubs.length)g.innerHTML='<div class="empty">No clubs.</div>';
   else editSnap.clubs.forEach((c,i)=>g.appendChild(mkCard(c,i,'edit')));
   renderPresets('presets-edit',editSnap.clubs,n=>editAddClub(n));
 }
@@ -514,7 +735,7 @@ function editDel(ci){editSnap.clubs.splice(ci,1);renderEditClubs()}
 function editAddClub(n){if(editSnap.clubs.find(c=>c.name===n))return;editSnap.clubs.push(newClub(n));renderEditClubs()}
 function editAddCustom(){const i=document.getElementById('edit-custom');const n=i.value.trim();if(n){editAddClub(n);i.value=''}}
 document.getElementById('edit-custom').addEventListener('keydown',e=>{if(e.key==='Enter')editAddCustom()});
-function saveEdit(){editSnap.date=document.getElementById('edit-date').value;hist[editIdx]=JSON.parse(JSON.stringify(editSnap));sv('trc_hist',hist);closeModal();renderHist()}
+function saveEdit(){editSnap.date=document.getElementById('edit-date').value;hist[editIdx]=JSON.parse(JSON.stringify(editSnap));saveHist();closeModal();renderHist()}
 </script>
 </body>
 </html>
